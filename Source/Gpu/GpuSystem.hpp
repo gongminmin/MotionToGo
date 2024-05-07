@@ -21,7 +21,7 @@ namespace MotionToGo
 
         enum class CmdQueueType : uint32_t
         {
-            Graphics = 0,
+            Compute = 0,
             VideoEncode,
 
             Num,

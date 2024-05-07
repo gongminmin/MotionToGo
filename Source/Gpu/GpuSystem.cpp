@@ -109,8 +109,8 @@ namespace MotionToGo
             D3D12_COMMAND_LIST_TYPE type;
             switch (static_cast<CmdQueueType>(i))
             {
-            case CmdQueueType::Graphics:
-                type = D3D12_COMMAND_LIST_TYPE_DIRECT;
+            case CmdQueueType::Compute:
+                type = D3D12_COMMAND_LIST_TYPE_COMPUTE;
                 break;
 
             case CmdQueueType::VideoEncode:

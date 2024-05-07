@@ -101,7 +101,7 @@ namespace MotionToGo
                 TIFHR(dxgi_buffer->GetUnknown(
                     MF_D3D12_SYNCHRONIZATION_OBJECT, winrt::guid_of<IMFD3D12SynchronizationObjectCommands>(), mf_sync_cmd.put_void()));
 
-                ID3D12CommandQueue* cmd_queue = gpu_system_.NativeCommandQueue(GpuSystem::CmdQueueType::Graphics);
+                ID3D12CommandQueue* cmd_queue = gpu_system_.NativeCommandQueue(GpuSystem::CmdQueueType::Compute);
                 mf_sync_cmd->EnqueueResourceReadyWait(cmd_queue);
 
                 GpuTexture2D mf_texture(texture.detach(), D3D12_RESOURCE_STATE_COMMON, L"mf_texture");
@@ -109,7 +109,7 @@ namespace MotionToGo
                     D3D12_RESOURCE_STATE_COMMON, L"frame_tex");
 
                 {
-                    auto cmd_list = gpu_system_.CreateCommandList(GpuSystem::CmdQueueType::Graphics);
+                    auto cmd_list = gpu_system_.CreateCommandList(GpuSystem::CmdQueueType::Compute);
                     for (uint32_t p = 0; p < mf_texture.Planes(); ++p)
                     {
                         const D3D12_BOX src_box{0, 0, 0, video_width_ / (1U << p), video_height_ / (1U << p), 1};

@@ -280,7 +280,7 @@ namespace MotionToGo
         src_box.bottom = height;
         src_box.back = 1;
 
-        assert(cmd_list.Type() == GpuSystem::CmdQueueType::Graphics);
+        assert(cmd_list.Type() == GpuSystem::CmdQueueType::Compute);
         auto* d3d12_cmd_list = cmd_list.NativeCommandList<ID3D12GraphicsCommandList>();
 
         auto src_old_state = this->State(0);
@@ -330,11 +330,11 @@ namespace MotionToGo
         src_box.bottom = height;
         src_box.back = 1;
 
-        assert(cmd_list.Type() == GpuSystem::CmdQueueType::Graphics);
+        assert(cmd_list.Type() == GpuSystem::CmdQueueType::Compute);
         auto* d3d12_cmd_list = cmd_list.NativeCommandList<ID3D12GraphicsCommandList>();
 
         auto src_old_state = this->State(0);
-        this->Transition(cmd_list, D3D12_RESOURCE_STATE_GENERIC_READ);
+        this->Transition(cmd_list, D3D12_RESOURCE_STATE_COMMON);
 
         d3d12_cmd_list->CopyTextureRegion(&dst, 0, 0, 0, &src, &src_box);
 
@@ -368,7 +368,7 @@ namespace MotionToGo
         dst.Type = D3D12_TEXTURE_COPY_TYPE_SUBRESOURCE_INDEX;
         dst.SubresourceIndex = sub_resource;
 
-        assert(cmd_list.Type() == GpuSystem::CmdQueueType::Graphics);
+        assert(cmd_list.Type() == GpuSystem::CmdQueueType::Compute);
         auto* d3d12_cmd_list = cmd_list.NativeCommandList<ID3D12GraphicsCommandList>();
 
         auto src_old_state = other.State(0);

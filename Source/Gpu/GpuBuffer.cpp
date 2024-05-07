@@ -145,7 +145,7 @@ namespace MotionToGo
     GpuUploadBuffer::GpuUploadBuffer() noexcept = default;
 
     GpuUploadBuffer::GpuUploadBuffer(GpuSystem& gpu_system, uint32_t size, std::wstring_view name)
-        : GpuBuffer(gpu_system, size, D3D12_HEAP_TYPE_UPLOAD, D3D12_RESOURCE_FLAG_NONE, D3D12_RESOURCE_STATE_GENERIC_READ, std::move(name)),
+        : GpuBuffer(gpu_system, size, D3D12_HEAP_TYPE_UPLOAD, D3D12_RESOURCE_FLAG_NONE, D3D12_RESOURCE_STATE_COMMON, std::move(name)),
           mapped_data_(this->Map())
     {
     }

@@ -22,10 +22,10 @@ namespace
                 (output_tex.Height(0) != static_cast<uint32_t>(height)) || (output_tex.Format() != format))
             {
                 output_tex = GpuTexture2D(
-                    gpu_system, width, height, 1, format, D3D12_RESOURCE_FLAG_ALLOW_UNORDERED_ACCESS, D3D12_RESOURCE_STATE_GENERIC_READ);
+                    gpu_system, width, height, 1, format, D3D12_RESOURCE_FLAG_ALLOW_UNORDERED_ACCESS, D3D12_RESOURCE_STATE_COMMON);
             }
 
-            auto cmd_list = gpu_system.CreateCommandList(GpuSystem::CmdQueueType::Graphics);
+            auto cmd_list = gpu_system.CreateCommandList(GpuSystem::CmdQueueType::Compute);
             output_tex.Upload(gpu_system, cmd_list, 0, data);
             gpu_system.Execute(std::move(cmd_list));
 

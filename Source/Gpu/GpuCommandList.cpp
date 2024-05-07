@@ -14,8 +14,8 @@ namespace MotionToGo
     {
         switch (type)
         {
-        case GpuSystem::CmdQueueType::Graphics:
-            TIFHR(gpu_system.NativeDevice()->CreateCommandList(0, D3D12_COMMAND_LIST_TYPE_DIRECT, cmd_allocator, nullptr,
+        case GpuSystem::CmdQueueType::Compute:
+            TIFHR(gpu_system.NativeDevice()->CreateCommandList(0, D3D12_COMMAND_LIST_TYPE_COMPUTE, cmd_allocator, nullptr,
                 winrt::guid_of<ID3D12GraphicsCommandList>(), cmd_list_.put_void()));
             break;
 
@@ -48,7 +48,7 @@ namespace MotionToGo
     {
         switch (type_)
         {
-        case GpuSystem::CmdQueueType::Graphics:
+        case GpuSystem::CmdQueueType::Compute:
             static_cast<ID3D12GraphicsCommandList*>(cmd_list_.get())
                 ->ResourceBarrier(static_cast<uint32_t>(barriers.size()), barriers.data());
             break;
@@ -67,7 +67,7 @@ namespace MotionToGo
     {
         switch (type_)
         {
-        case GpuSystem::CmdQueueType::Graphics:
+        case GpuSystem::CmdQueueType::Compute:
             static_cast<ID3D12GraphicsCommandList*>(cmd_list_.get())->Close();
             break;
 
@@ -84,7 +84,7 @@ namespace MotionToGo
     {
         switch (type_)
         {
-        case GpuSystem::CmdQueueType::Graphics:
+        case GpuSystem::CmdQueueType::Compute:
             static_cast<ID3D12GraphicsCommandList*>(cmd_list_.get())->Reset(cmd_allocator, nullptr);
             break;
 

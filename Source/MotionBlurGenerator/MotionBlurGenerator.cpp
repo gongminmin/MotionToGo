@@ -139,7 +139,7 @@ namespace MotionToGo
 
             random_tex_ = GpuTexture2D(gpu_system_, tile_width, tile_height, 1, DXGI_FORMAT_R8_UNORM,
                 D3D12_RESOURCE_FLAG_ALLOW_UNORDERED_ACCESS, D3D12_RESOURCE_STATE_COMMON, L"random_tex");
-            auto cmd_list = gpu_system_.CreateCommandList(GpuSystem::CmdQueueType::Graphics);
+            auto cmd_list = gpu_system_.CreateCommandList(GpuSystem::CmdQueueType::Compute);
             random_tex_.Upload(gpu_system_, cmd_list, 0, rand_data.get());
             gpu_system_.Execute(std::move(cmd_list));
         }
@@ -367,7 +367,7 @@ namespace MotionToGo
         uint64_t fence_value;
         if (frame_tex.Format() == DXGI_FORMAT_NV12)
         {
-            auto cmd_list = gpu_system_.CreateCommandList(GpuSystem::CmdQueueType::Graphics);
+            auto cmd_list = gpu_system_.CreateCommandList(GpuSystem::CmdQueueType::Compute);
             for (uint32_t p = 0; p < frame_tex.Planes(); ++p)
             {
                 const D3D12_BOX src_box{0, 0, 0, frame_tex.Width(0) / (1U << p), frame_tex.Height(0) / (1U << p), 1};
@@ -380,7 +380,7 @@ namespace MotionToGo
         }
         else
         {
-            auto cmd_list = gpu_system_.CreateCommandList(GpuSystem::CmdQueueType::Graphics);
+            auto cmd_list = gpu_system_.CreateCommandList(GpuSystem::CmdQueueType::Compute);
             for (uint32_t p = 0; p < frame_tex.Planes(); ++p)
             {
                 const D3D12_BOX src_box{0, 0, 0, frame_tex.Width(0) / (1U << p), frame_tex.Height(0) / (1U << p), 1};
@@ -393,7 +393,7 @@ namespace MotionToGo
 
         if (first_frame)
         {
-            auto cmd_list = gpu_system_.CreateCommandList(GpuSystem::CmdQueueType::Graphics);
+            auto cmd_list = gpu_system_.CreateCommandList(GpuSystem::CmdQueueType::Compute);
             const D3D12_BOX src_box{0, 0, 0, frame_tex.Width(0), frame_tex.Height(0), 1};
             motion_blurred_tex.CopyFrom(gpu_system_, cmd_list, frames_[this_frame].frame_rgb_tex, 0, 0, 0, src_box);
             fence_value = gpu_system_.Execute(std::move(cmd_list));
@@ -593,7 +593,7 @@ namespace MotionToGo
                 OffsetHandle(cs.desc_block.CpuHandle(), desc_block_base + cs.num_srvs + i, descriptor_size));
         }
 
-        auto cmd_list = gpu_system_.CreateCommandList(GpuSystem::CmdQueueType::Graphics);
+        auto cmd_list = gpu_system_.CreateCommandList(GpuSystem::CmdQueueType::Compute);
         auto* d3d12_cmd_list = cmd_list.NativeCommandList<ID3D12GraphicsCommandList>();
 
         d3d12_cmd_list->SetComputeRootSignature(cs.root_sig.get());

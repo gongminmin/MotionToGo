@@ -21,7 +21,7 @@ namespace MotionToGo
         if (is_upload_)
         {
             heap_type = D3D12_HEAP_TYPE_UPLOAD;
-            init_state = D3D12_RESOURCE_STATE_GENERIC_READ;
+            init_state = D3D12_RESOURCE_STATE_COMMON;
         }
         else
         {

@@ -55,7 +55,7 @@ namespace
         const uint32_t format_size = FormatSize(texture.Format());
 
         std::vector<uint8_t> data(width * height * format_size);
-        auto cmd_list = gpu_system.CreateCommandList(GpuSystem::CmdQueueType::Graphics);
+        auto cmd_list = gpu_system.CreateCommandList(GpuSystem::CmdQueueType::Compute);
         texture.Readback(gpu_system, cmd_list, 0, data.data());
         gpu_system.Execute(std::move(cmd_list));
 
